@@ -3,7 +3,6 @@ package com.luis.validador.core;
 import static com.luis.validador.utils.Utils.extrairApenasNumerosDeUmaString;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import com.luis.validador.exception.CPFInvalidoException;
 import com.luis.validador.model.CPF;

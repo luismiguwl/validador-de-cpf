@@ -87,4 +87,25 @@ class ValidadorTest {
 		assertThat(validador.validarSegundoDigito()).isFalse();
 		assertThat(new Validador(cpf).validar()).isFalse();
 	}
+	
+	@Test
+	@DisplayName("Deve retornar o resultado da multiplicação dos números do CPF")
+	public void multiplicarNumeroDoCpfTest() {
+		String cpf = "236.865.184-58";
+		validador = new Validador(cpf);
+		
+		int resultado = validador.multiplicarNumerosDoCpf(10, 2);
+		assertThat(resultado).isEqualTo(248);
+	}
+	
+	@Test
+	@DisplayName("Deve retornar o resultado da multiplicação dos números do CPF #2")
+	public void multiplicarNumeroDoCpf2est() {
+		String cpf = "236.865.184-58";
+		validador = new Validador(cpf);
+		
+		int resultado = validador.multiplicarNumerosDoCpf(11, 2);
+		assertThat(resultado).isEqualTo(301);
+	}
+	
 }
