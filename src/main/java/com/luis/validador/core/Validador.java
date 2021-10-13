@@ -30,11 +30,7 @@ public class Validador {
     }
 
     public boolean possuiOnzeNumeros(String caracteres) {
-        String[] numeros = Arrays.stream(caracteres.split(""))
-                .filter(caracter -> "0123456789".contains(caracter))
-                .collect(Collectors.toList())
-                .toArray(new String[0]);
-
+        String[] numeros = extrairApenasNumerosDeUmaString(caracteres);
         return numeros.length == 11;
     }
 

@@ -1,3 +1,7 @@
+# Fonte de informação
+Antes de iniciar a leitura, gostaria de deixar aqui o link para o artigo que serviu como referência para esse projeto: https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/. Tal artigo foi escrito pelo Gustavo Furtado de Oliveira Alves, e eu especular que o ano de lançamento do artigo foi em 2015, baseando-me nos comentários, que datam de 6 anos atrás.
+
+
 # Algoritmo
 O algoritmo para validar um CPF é relativamente simples e possui poucas etapas que serão explicadas no decorrer deste README.
 
@@ -60,11 +64,12 @@ Como não conseguimos validar os dois dígitos verificadores, podemos concluir q
 # Exemplo com CPF válido
 
 Para exemplificar com um CPF válido, vamos usar um CPF gerado pelo código :)
+
 `
 671.831.858-26
 `
 
-Serei mais breve nesse exemplo porque já temos o algoritmo completo acima
+Serei mais breve nesse exemplo porque já temos o algoritmo completo acima.
 
 Resultados da multiplicação:
 ```
@@ -89,3 +94,8 @@ Comparações:
 ```
 
 O CPF `671.831.858-26` é válido.
+
+
+# Peculiaridades da validação
+
+Uma peculiaridade da validação são os CPFs cujo números são iguais, tipo `000.000.000-00`, `111.111.111-11` e assim por diante. Se você parar para analisar e fazer as contas, irá constatar que, de acordo com o algoritmo acima, o CPF é válido. Sim, é isso mesmo, o número `111.111.111-11` é, na teoria, válido. Porém pessoas com esses CPFs ou não existem ou tiveram os CPFs cancelados. Segue um link de uma discussão no fórum da DevMedia: https://www.devmedia.com.br/forum/curiosidade-sobre-rotinas-para-validacao-de-cpf/245613.
