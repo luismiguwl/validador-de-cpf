@@ -1,9 +1,12 @@
 package com.luis.validador.core;
 
-import com.luis.validador.exception.CPFInvalidoException;
-import com.luis.validador.model.CPF;
+import static com.luis.validador.utils.Utils.extrairApenasNumerosDeUmaString;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import com.luis.validador.exception.CPFInvalidoException;
+import com.luis.validador.model.CPF;
 
 public class Validador {
 
@@ -50,9 +53,8 @@ public class Validador {
     }
 
     public int multiplicarNumerosDoCpf(int maximo, int minimo) {
-        String[] numerosDoCPF = obterApenasNumerosDoCpf();
-        int soma = 0;
-        int indice = 0;
+        String[] numerosDoCPF = extrairApenasNumerosDeUmaString(cpf.get());
+        int soma = 0, indice = 0;
 
         for (int i = maximo; i >= minimo; i--) {
             soma += Integer.parseInt(numerosDoCPF[indice]) * i;
@@ -60,15 +62,6 @@ public class Validador {
         }
 
         return soma;
-    }
-
-    public String[] obterApenasNumerosDoCpf() {
-        String[] caracteresDoCPF = cpf.get().split("");
-
-        return Arrays.stream(caracteresDoCPF)
-                .filter(caracter -> "1234567890".contains(caracter))
-                .collect(Collectors.toList())
-                .toArray(new String[0]);
     }
 
     public boolean numerosDoCpfSaoIguais(String supostoCpf) {

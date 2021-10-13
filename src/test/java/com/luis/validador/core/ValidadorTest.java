@@ -33,17 +33,6 @@ class ValidadorTest {
 	}
 	
 	@Test
-	@DisplayName("Deve obter apenas números do CPF")
-	public void obterApenasNumerosDoCpfTest() {
-		String cpf = "123.424.651-40";
-		validador = new Validador(cpf);
-		
-		String[] valorEsperado = "12342465140".split("");
-		
-		assertThat(validador.obterApenasNumerosDoCpf()).isEqualTo(valorEsperado);
-	}
-	
-	@Test
 	@DisplayName("Deve retornar true se CPF for válido")
 	public void cpfValidoTest() {
 		String cpf = "529.982.247-25";
