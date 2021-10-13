@@ -1,5 +1,6 @@
 package com.luis.validador.core;
 
+import com.luis.validador.exception.CPFInvalidoException;
 import com.luis.validador.model.CPF;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -10,11 +11,13 @@ public class Validador {
 
     public Validador(String supostoCpf) {
         if (contemLetra(supostoCpf)) {
-            throw new IllegalArgumentException("CPF não pode possuir letra(s)!");
+            throw new CPFInvalidoException("CPF não pode possuir letra(s)!");
         } else if (!possuiOnzeNumeros(supostoCpf)) {
-            throw new IllegalArgumentException("CPF deve possuir 11 números!");
+            throw new CPFInvalidoException("CPF deve possuir 11 números!");
+        } else if (supostoCpf.length() > 14) {
+        	throw new CPFInvalidoException("Um CPF possui no máximo 14 caracteres!");
         } else {
-            this.cpf = new CPF(supostoCpf);
+        	this.cpf = new CPF(supostoCpf);
         }
     }
 
