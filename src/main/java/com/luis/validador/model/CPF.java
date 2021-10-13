@@ -22,9 +22,6 @@ public class CPF {
         int primeiroDigitoVerificador = Integer.parseInt(cpf.split("")[cpf.length() - 2]);
         int segundoDigitoVerificador = Integer.parseInt(cpf.split("")[cpf.length() - 1]);
         
-        System.out.println(primeiroDigitoVerificador);
-        System.out.println(segundoDigitoVerificador);
-        
         digitosVerificadores = new int[2];
         
         digitosVerificadores[0] = primeiroDigitoVerificador;

@@ -14,19 +14,19 @@ public class Validador {
             throw new CPFInvalidoException("CPF não pode possuir letra(s)!");
         } else if (!possuiOnzeNumeros(supostoCpf)) {
             throw new CPFInvalidoException("CPF deve possuir 11 números!");
-        } else if (supostoCpf.length() > 14) {
-        	throw new CPFInvalidoException("Um CPF possui no máximo 14 caracteres!");
-        } else {
-        	this.cpf = new CPF(supostoCpf);
+        } else if (numerosDoCpfSaoIguais(supostoCpf)) {
+        	throw new CPFInvalidoException("Números do CPF não podem ser todos iguais!");
         }
+        
+        this.cpf = new CPF(supostoCpf);
     }
 
-    private boolean contemLetra(String caracteres) {
+    public boolean contemLetra(String caracteres) {
         return Arrays.stream(caracteres.split(""))
-                .anyMatch(caracter -> "abcdefghijklmnopqrstuvwxyz".contains(caracter));
+                .anyMatch(caracter -> "abcdefghijklmnopqrstuvwxyz".contains(caracter.toLowerCase()));
     }
 
-    private boolean possuiOnzeNumeros(String caracteres) {
+    public boolean possuiOnzeNumeros(String caracteres) {
         String[] numeros = Arrays.stream(caracteres.split(""))
                 .filter(caracter -> "0123456789".contains(caracter))
                 .collect(Collectors.toList())
@@ -36,7 +36,7 @@ public class Validador {
     }
 
     public boolean validar() {
-        return !numerosDoCpfSaoIguais() && validarPrimeiroDigito() && validarSegundoDigito();
+        return validarPrimeiroDigito() && validarSegundoDigito();
     }
 
     public boolean validarPrimeiroDigito() {
@@ -71,8 +71,8 @@ public class Validador {
                 .toArray(new String[0]);
     }
 
-    public boolean numerosDoCpfSaoIguais() {
-        String primeiroCaracterDoCpf = Character.toString(cpf.get().charAt(0));
+    public boolean numerosDoCpfSaoIguais(String supostoCpf) {
+        String primeiroCaracterDoCpf = Character.toString(supostoCpf.charAt(0));
         int primeiroNumeroDoCpf = Integer.parseInt(primeiroCaracterDoCpf);
 
         String[] numeros = new String[11];
@@ -80,7 +80,7 @@ public class Validador {
 
         String numerosString = String.join("", numeros);
 
-        return cpf.get().equals(numerosString);
+        return supostoCpf.equals(numerosString);
     }
 
 }
