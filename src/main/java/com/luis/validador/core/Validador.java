@@ -25,12 +25,12 @@ public class Validador {
 
     public boolean contemLetra(String caracteres) {
         return Arrays.stream(caracteres.split(""))
-                .anyMatch(caracter -> "abcdefghijklmnopqrstuvwxyz".contains(caracter.toLowerCase()));
+        		.map(caracter -> caracter.toLowerCase())
+                .anyMatch(caracter -> "abcdefghijklmnopqrstuvwxyz".contains(caracter));
     }
 
     public boolean possuiOnzeNumeros(String caracteres) {
-        String[] numeros = extrairApenasNumerosDeUmaString(caracteres);
-        return numeros.length == 11;
+        return extrairApenasNumerosDeUmaString(caracteres).length == 11;
     }
 
     public boolean validar() {
