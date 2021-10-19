@@ -94,7 +94,7 @@ class ValidadorTest {
 		String cpf = "236.865.184-58";
 		validador = new Validador(cpf);
 		
-		int resultado = validador.multiplicarNumerosDoCpf(10, 2);
+		int resultado = validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(10, 2);
 		assertThat(resultado).isEqualTo(248);
 	}
 	
@@ -104,7 +104,7 @@ class ValidadorTest {
 		String cpf = "236.865.184-58";
 		validador = new Validador(cpf);
 		
-		int resultado = validador.multiplicarNumerosDoCpf(11, 2);
+		int resultado = validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(11, 2);
 		assertThat(resultado).isEqualTo(301);
 	}
 	
