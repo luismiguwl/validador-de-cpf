@@ -3,7 +3,9 @@ package com.luis.validador.model;
 public class CPF {
     
     private String cpf;
-    private int[] digitosVerificadores;
+
+    private int primeiroDigitoVerificador;
+    private int segundoDigitoVerificador;
 
     public CPF(String numeros) {
         this.cpf = numeros;
@@ -13,18 +15,17 @@ public class CPF {
     public String get() {
         return cpf;
     }
-    
-    public int[] getDigitosVerificadores() {
-        return digitosVerificadores;
+
+    public int getPrimeiroDigitoVerificador() {
+        return primeiroDigitoVerificador;
+    }
+
+    public int getSegundoDigitoVerificador() {
+        return segundoDigitoVerificador;
     }
     
     private void definirDigitosVerificadores() {
-        int primeiroDigitoVerificador = Integer.parseInt(cpf.split("")[cpf.length() - 2]);
-        int segundoDigitoVerificador = Integer.parseInt(cpf.split("")[cpf.length() - 1]);
-        
-        digitosVerificadores = new int[2];
-        
-        digitosVerificadores[0] = primeiroDigitoVerificador;
-        digitosVerificadores[1] = segundoDigitoVerificador;
+        primeiroDigitoVerificador = Integer.parseInt(cpf.split("")[cpf.length() - 2]);
+        segundoDigitoVerificador = Integer.parseInt(cpf.split("")[cpf.length() - 1]);
     }
 }

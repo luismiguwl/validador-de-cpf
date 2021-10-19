@@ -51,12 +51,12 @@ public class Validador {
 
     public boolean validarPrimeiroDigito() {
         int somaDaMultiplicacaoDosNumeros = multiplicarNumerosDoCpf(10, 2);
-        return (somaDaMultiplicacaoDosNumeros * 10) % 11 == cpf.getDigitosVerificadores()[0];
+        return (somaDaMultiplicacaoDosNumeros * 10) % 11 == cpf.getPrimeiroDigitoVerificador();
     }
 
     public boolean validarSegundoDigito() {
         int somaDaMultiplicacaoDosNumeros = multiplicarNumerosDoCpf(11, 2);
-        return (somaDaMultiplicacaoDosNumeros * 10) % 11 == cpf.getDigitosVerificadores()[1];
+        return (somaDaMultiplicacaoDosNumeros * 10) % 11 == cpf.getSegundoDigitoVerificador();
     }
 
     public int multiplicarNumerosDoCpf(int maximo, int minimo) {
