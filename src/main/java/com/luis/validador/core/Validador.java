@@ -32,6 +32,18 @@ public class Validador {
     public boolean possuiOnzeNumeros(String caracteres) {
         return extrairApenasNumerosDeUmaString(caracteres).length == 11;
     }
+    
+    public boolean numerosDoCpfSaoIguais(String supostoCpf) {
+        String primeiroCaracterDoCpf = Character.toString(supostoCpf.charAt(0));
+        int primeiroNumeroDoCpf = Integer.parseInt(primeiroCaracterDoCpf);
+
+        String[] numeros = new String[11];
+        Arrays.fill(numeros, Integer.toString(primeiroNumeroDoCpf));
+
+        String primeiroNumeroDoCpfRepetido = String.join("", numeros);
+
+        return supostoCpf.equals(primeiroNumeroDoCpfRepetido);
+    }
 
     public boolean validar() {
         return validarPrimeiroDigito() && validarSegundoDigito();
@@ -57,18 +69,6 @@ public class Validador {
         }
 
         return soma;
-    }
-
-    public boolean numerosDoCpfSaoIguais(String supostoCpf) {
-        String primeiroCaracterDoCpf = Character.toString(supostoCpf.charAt(0));
-        int primeiroNumeroDoCpf = Integer.parseInt(primeiroCaracterDoCpf);
-
-        String[] numeros = new String[11];
-        Arrays.fill(numeros, Integer.toString(primeiroNumeroDoCpf));
-
-        String numerosString = String.join("", numeros);
-
-        return supostoCpf.equals(numerosString);
     }
 
 }
