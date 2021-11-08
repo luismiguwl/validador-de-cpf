@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 class CPFTest {
 
-	@Test
-	public void digitosVerificadoresOkTest() {
-		CPF cpf = new CPF("529.982.247-25");
+    @Test
+    public void digitosVerificadoresOkTest() {
+        CPF cpf = new CPF("529.982.247-25");
 
-		assertThat(cpf.getPrimeiroDigitoVerificador()).isEqualTo(2);
-		assertThat(cpf.getSegundoDigitoVerificador()).isEqualTo(5);
-	}
+        assertThat(cpf.getPrimeiroDigitoVerificador()).isEqualTo(2);
+        assertThat(cpf.getSegundoDigitoVerificador()).isEqualTo(5);
+    }
 }
