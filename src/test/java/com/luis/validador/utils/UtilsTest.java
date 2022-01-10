@@ -16,9 +16,11 @@ public class UtilsTest {
 
     @Test
     public void extrairApenasNumerosDeUmaStringSemNumerosTest() {
-        String valorQualquer = "leia o readme :)";
-        String[] resultadoEsperado = {};
+        String valorQualquer = "On That Time";
+        String[] valorEsperado = {};
         
-        assertThat(extrairApenasNumerosDeUmaString(valorQualquer)).isEqualTo(resultadoEsperado);
+        String[] valorRetornado = extrairApenasNumerosDeUmaString(valorQualquer);
+        
+        assertThat(valorRetornado).isEqualTo(valorEsperado);
     }
 }

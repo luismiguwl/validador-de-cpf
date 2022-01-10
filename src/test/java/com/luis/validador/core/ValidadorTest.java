@@ -15,21 +15,21 @@ class ValidadorTest {
     @DisplayName("Deve retornar true se todos os números do CPF forem iguais")
     public void cpfComNumerosIguaisTest() {
         String cpf = "11111111111";
-        assertThatThrownBy(() -> validador = new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
+        assertThatThrownBy(() -> new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
     }
 
     @Test
-    @DisplayName("Deve retornar exceção se CPF conter letra")
-    public void cpfPossuiLetraTest() {
-        String cpf = "12EA3567842";
-        assertThatThrownBy(() -> validador = new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
+    @DisplayName("Deve retornar exceção se CPF não conter apenas caracteres aceitos")
+    public void cpfPossuiApenasCaracteresAceitos() {
+        String cpf = "123456789aa";
+        assertThatThrownBy(() -> new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
     }
 
     @Test
     @DisplayName("Deve retornar exceção se CPF possuir length diferente de 11")
     public void cpfComLengthDiferenteDeOnzeTest() {
         String cpf = "112342";
-        assertThatThrownBy(() -> validador = new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
+        assertThatThrownBy(() -> new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
     }
 
     @Test
@@ -106,6 +106,19 @@ class ValidadorTest {
 
         int resultado = validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(11, 2);
         assertThat(resultado).isEqualTo(301);
+    }
+    
+    @Test
+    @DisplayName("Deve lançar uma exceção se CPF estiver vazio")
+    public void cpfVazioTest() {
+        String cpf = "   ";
+        assertThatThrownBy(() -> new Validador(cpf)).isInstanceOf(CPFInvalidoException.class);
+    }
+    
+    @Test
+    @DisplayName("Deve lançar uma exceção se CPF for nulo")
+    public void cpfNuloTest() {
+        assertThatThrownBy(() -> new Validador(null)).isInstanceOf(CPFInvalidoException.class);
     }
 
 }
