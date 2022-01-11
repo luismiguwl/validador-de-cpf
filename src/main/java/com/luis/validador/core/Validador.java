@@ -11,30 +11,40 @@ public class Validador implements MetodosValidadores {
 
     private final int QUANTIDADE_DE_NUMEROS_DE_UM_CPF = 11;
     private CPF cpf;
+    private String stringRecebida;
 
-    public Validador(String supostoCpf) {
-        System.out.println("String recebida = " + supostoCpf);
-
-        verificarSeCpfNaoEhNulo(supostoCpf);
-        verificarSeExistemApenasCaracteresValidos(supostoCpf);
-        verificarSeCPFPossuiOnzeNumeros(supostoCpf);
-        verificarSeNumerosDoCPFNaoSaoIguais(supostoCpf);
-        
-        this.cpf = new CPF(supostoCpf);
+    public Validador(String stringRecebida) {
+        this.stringRecebida = stringRecebida;
+    }
+    
+    public Validador(CPF cpf) {
+        this.cpf = cpf;
+        this.stringRecebida = cpf.get();
     }
 
+    public boolean validar() {
+        verificarSeCpfNaoEhNulo();
+        verificarSeExistemApenasCaracteresValidos();
+        verificarSeCPFPossuiOnzeNumeros();
+        verificarSeNumerosDoCPFNaoSaoIguais();
+        
+        this.cpf = new CPF(stringRecebida);
+        
+        return validarPrimeiroDigito() && validarSegundoDigito();
+    }
+    
     @Override
-    public void verificarSeCpfNaoEhNulo(String cpf) {
-        if (cpf == null) {
+    public void verificarSeCpfNaoEhNulo() throws CPFInvalidoException {
+        if (stringRecebida == null) {
             throw new CPFInvalidoException("CPF não pode ser nulo!");
         }
     }
 
     @Override
-    public void verificarSeExistemApenasCaracteresValidos(String caracteres) {
+    public void verificarSeExistemApenasCaracteresValidos() throws CPFInvalidoException {
         String caracteresAceitos = "0123456789-.";
         boolean possuiTodosCaracteresValidos
-                = Arrays.stream(caracteres.split(""))
+                = Arrays.stream(stringRecebida.split(""))
                         .allMatch(caracter -> caracteresAceitos.contains(caracter));
 
         if (!possuiTodosCaracteresValidos) {
@@ -43,8 +53,8 @@ public class Validador implements MetodosValidadores {
     }
 
     @Override
-    public void verificarSeCPFPossuiOnzeNumeros(String cpf) {
-        boolean possuiOnzeNumeros = extrairApenasNumerosDeUmaString(cpf).length == QUANTIDADE_DE_NUMEROS_DE_UM_CPF;
+    public void verificarSeCPFPossuiOnzeNumeros() throws CPFInvalidoException {
+        boolean possuiOnzeNumeros = extrairApenasNumerosDeUmaString(stringRecebida).length == QUANTIDADE_DE_NUMEROS_DE_UM_CPF;
         
         if (!possuiOnzeNumeros) {
             throw new CPFInvalidoException("CPF deve possuir 11 números!");
@@ -52,8 +62,8 @@ public class Validador implements MetodosValidadores {
     }
     
     @Override
-    public void verificarSeNumerosDoCPFNaoSaoIguais(String supostoCpf) {
-        String primeiroCaracterDoCpf = Character.toString(supostoCpf.charAt(0));
+    public void verificarSeNumerosDoCPFNaoSaoIguais() throws CPFInvalidoException {
+        String primeiroCaracterDoCpf = Character.toString(stringRecebida.charAt(0));
         int primeiroNumeroDoCpf = Integer.parseInt(primeiroCaracterDoCpf);
 
         String[] numeros = new String[QUANTIDADE_DE_NUMEROS_DE_UM_CPF];
@@ -61,15 +71,11 @@ public class Validador implements MetodosValidadores {
 
         String primeiroNumeroDoCpfRepetido = String.join("", numeros);
 
-        boolean numerosSaoIguais = supostoCpf.equals(primeiroNumeroDoCpfRepetido);
+        boolean numerosSaoIguais = stringRecebida.equals(primeiroNumeroDoCpfRepetido);
         
         if (numerosSaoIguais) {
             throw new CPFInvalidoException("Números do CPF não podem ser todos iguais!");
         }
-    }
-
-    public boolean validar() {
-        return validarPrimeiroDigito() && validarSegundoDigito();
     }
 
     public boolean validarPrimeiroDigito() {

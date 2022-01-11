@@ -4,6 +4,6 @@ public class CPFInvalidoException extends RuntimeException {
 
     public CPFInvalidoException(String mensagem) {
         super(mensagem);
-        System.out.println(mensagem);
+//        System.out.println(mensagem);
     }
 }
