@@ -22,7 +22,7 @@ public class Validador implements MetodosValidadores {
         this.stringRecebida = cpf.get();
     }
 
-    public boolean validar() {
+    public boolean validar() throws CPFInvalidoException {
         verificarSeCpfNaoEhNulo();
         verificarSeExistemApenasCaracteresValidos();
         verificarSeCPFPossuiOnzeNumeros();
