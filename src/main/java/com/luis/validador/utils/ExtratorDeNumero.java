@@ -3,10 +3,15 @@ package com.luis.validador.utils;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class Utils {
-
-    public static String[] extrairApenasNumerosDeUmaString(String linha) {
-        String[] caracteresDoCPF = linha.split("");
+public class ExtratorDeNumero {
+	private String texto;
+	
+	public ExtratorDeNumero(String texto) {
+		this.texto = texto;
+	}
+	
+    public String[] extrairApenasNumerosDaString() {
+        String[] caracteresDoCPF = texto.split("");
 
         return Arrays.stream(caracteresDoCPF)
                 .filter(caracter -> "1234567890".contains(caracter))
