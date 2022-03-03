@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ValidadorDeEstruturaTest {
+class ValidadorDeEstruturaTest {
 	
 	ValidadorDeEstrutura validador;
 	String cpf;
@@ -22,71 +22,58 @@ public class ValidadorDeEstruturaTest {
 	
 	@Test
 	void deveRetornarFalseSeCPFNaoForNulo() {
-		cpf = "";
-		setUp();
+		validador.setCpf("");
 		assertThat(validador.ehNulo()).isFalse();
 	}
 	
 	@Test
 	void deveRetornarTrueSeCPFConterOnzeNumeros() {
-		String numeroQualquer = "1";
-		cpf = numeroQualquer.repeat(11);
-		setUp();
+		validador.setCpf("1".repeat(11));
 		assertThat(validador.possuiOnzeNumeros()).isTrue();
 	}
 	
 	@Test
 	void deveRetornarFalseSeCPFNaoConterOnzeNumeros() {
-		String numeroQualquer = "1";
-		cpf = numeroQualquer.repeat(10);
-		setUp();
+		validador.setCpf("1".repeat(10));
 		assertThat(validador.possuiOnzeNumeros()).isFalse();
 	}
 	
 	@Test
 	void deveRetornarTrueSeCPFPossuirTodosCaracteresValidos() {
-		cpf = "1.-";
-		setUp();
+		validador.setCpf("1.-");
 		assertThat(validador.caracteresSaoValidos()).isTrue();
 	}
 	
 	@Test
 	void deveRetornarFalseSeCPFNaoPossuiTodosCaracteresValidos() {
-		cpf = "*";
-		setUp();
+		validador.setCpf("*");
 		assertThat(validador.caracteresSaoValidos()).isFalse();
 	}
 	
 	@Test
 	void deveRetornarTrueSeNumerosDoCPFSaoIguais() {
-		String numeroQualquer = "1";
-		cpf = numeroQualquer.repeat(11);
-		setUp();
+		validador.setCpf("1".repeat(11));
 		assertThat(validador.numerosSaoIguais()).isTrue();
 	}
 	
 	@Test
 	void deveRetornarFalseSeNumerosDoCPFNaoSaoIguais() {
-		cpf = "1234";
-		setUp();
+		validador.setCpf("1234");
 		assertThat(validador.numerosSaoIguais()).isFalse();
 	}
 	
 	@Test
 	void deveRetornarUmSeCPFComecarComUm() {
-		cpf = "1234";
-		setUp();
+		validador.setCpf("1234");
 		assertThat(validador.obterPrimeiroNumeroDoCPF()).isEqualTo(1);
 	}
 	
 	@Test
 	void deveRetornarArrayPreenchidoComDeterminadoNumero() {
-		setUp();
 		int numero = 7;
 		
 		String[] arrayRetornado = validador.preencherArrayComPrimeiroNumeroDoCPF(numero);
-		String numeroString = Integer.toString(numero);
-		String[] arrayEsperado = numeroString.repeat(11).split("");
+		String[] arrayEsperado = Integer.toString(numero).repeat(11).split("");
 		
 		assertThat(arrayEsperado).isEqualTo(arrayRetornado);
 	}
@@ -101,43 +88,37 @@ public class ValidadorDeEstruturaTest {
 	
 	@Test
 	void deveRetornarTrueSeNumeroForIgualAoCPF() {
-		cpf = "12345678901";
-		setUp();
-		assertThat(validador.numerosDoCPFSaoIguais("12345678901")).isTrue();
+		validador.setCpf("12345678901");
+		assertThat(validador.numerosDoCPFSaoIguais(validador.getCpf())).isTrue();
 	}
 	
 	@Test
 	void deveRetornarFalseSeNumeroNaoForIgualAoCPF() {
-		cpf = "12345678901";
-		setUp();
-		assertThat(validador.numerosDoCPFSaoIguais("1")).isFalse();
+		validador.setCpf("12345678901");
+		String primeiroNumero = validador.getCpf().split("")[0];
+		assertThat(validador.numerosDoCPFSaoIguais(primeiroNumero)).isFalse();
 	}
 	
 	@Test
 	void deveRetornarTrueSeEstruturaEstiverOK() {
-		cpf = "479.885.790-45";
-		setUp();
+		validador.setCpf("479.885.790-45");
 		assertThat(validador.ehValida()).isTrue();
 	}
 	
 	@Test
 	void deveRetornarFalseSeCPFForNulo() {
-		cpf = null;
-		setUp();
 		assertThat(validador.ehValida()).isFalse();
 	}
 	
 	@Test
 	void deveRetornarFalseSeCPFNaoPossuirOnzeNumeros() {
-		cpf = "1234";
-		setUp();
+		validador.setCpf("1234");
 		assertThat(validador.ehValida()).isFalse();
 	}
 	
 	@Test
 	void deveRetornarFalseSeCPFNaoPossuirTodosCaracteresValidos() {
-		cpf = "479.885.790*45";
-		setUp();
+		validador.setCpf("479.885.790*45");
 		assertThat(validador.ehValida()).isFalse();
 	}
 }

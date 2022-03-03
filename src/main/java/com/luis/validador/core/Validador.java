@@ -6,22 +6,26 @@ public class Validador {
     
     private ValidadorDeEstrutura estrutura;
     private ValidadorDeDigitos validadorDeDigitos;
-    private final String stringRecebida;
+    private String supostoCpf;
 
-    public Validador(String stringRecebida) {
-        this.stringRecebida = stringRecebida;
-        estrutura = new ValidadorDeEstrutura(stringRecebida);
+    public Validador(String supostoCpf) {
+        this.supostoCpf = supostoCpf;
+        estrutura = new ValidadorDeEstrutura(supostoCpf);
+    }
+
+    public void setSupostoCpf(String supostoCpf) {
+        this.supostoCpf = supostoCpf;
     }
 
     public boolean validar() {
-        if (!estrutura.ehValida()) {
-            return false;
+        if (estrutura.ehValida()) {
+            CPF cpf = new CPF(supostoCpf);
+            validadorDeDigitos = new ValidadorDeDigitos(cpf);
+
+            return validadorDeDigitos.digitosVerificadoresSaoValidos();
         }
 
-        CPF cpf = new CPF(stringRecebida);
-        validadorDeDigitos = new ValidadorDeDigitos(cpf);
-
-        return validadorDeDigitos.digitosVerificadoresSaoValidos();
+        return false;
     }
     
 }

@@ -1,25 +1,18 @@
 package com.luis.validador.core;
 
 import static org.assertj.core.api.Assertions.*;
+import static com.luis.validador.CPFParaTeste.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ValidadorTest {
+class ValidadorTest {
 	Validador validador;
-	String numerosDoCPF = getCPFValido();
+	String numerosDoCPF;
 
 	@BeforeEach
 	void setUp() {
-		validador = new Validador(numerosDoCPF);
-	}
-	
-	private String getCPFValido() {
-		return "479.885.790-45";
-	}
-	
-	private String getCPFComEstruturaInvalida() {
-		return "479.885.790";
+		validador = new Validador(CPF_VALIDO);
 	}
 	
 	@Test
@@ -29,8 +22,7 @@ public class ValidadorTest {
 	
 	@Test
 	void deveRetornarFalseSeEstruturaForInvalida() {
-		numerosDoCPF = getCPFComEstruturaInvalida();
-		setUp();
+		validador.setSupostoCpf(CPF_INVALIDO);
 		assertThat(validador.validar()).isFalse();
 	}
 }

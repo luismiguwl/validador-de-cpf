@@ -9,6 +9,10 @@ public class ExtratorDeNumero {
 	public ExtratorDeNumero(String texto) {
 		this.texto = texto;
 	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
 	
     public String[] extrairApenasNumerosDaString() {
         String[] caracteresDoCPF = texto.split("");

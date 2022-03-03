@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class UtilsTest {
+class UtilsTest {
 	ExtratorDeNumero extrator;
 	String texto;
 	
@@ -17,9 +17,7 @@ public class UtilsTest {
 	
     @Test
     public void extrairApenasNumerosDeUmaStringTest() {
-        texto = "Way 2 Sexy";
-        setUp();
-        
+        extrator.setTexto("Way 2 Sexy");
         String[] resultadoEsperado = {"2"};
         
         assertThat(extrator.extrairApenasNumerosDaString()).isEqualTo(resultadoEsperado);
@@ -27,8 +25,7 @@ public class UtilsTest {
 
     @Test
     public void extrairApenasNumerosDeUmaStringSemNumerosTest() {
-        texto = "On That Time";
-        setUp();
+        extrator.setTexto("On That Time");
         
         String[] valorEsperado = {};
         String[] valorRetornado = extrator.extrairApenasNumerosDaString();

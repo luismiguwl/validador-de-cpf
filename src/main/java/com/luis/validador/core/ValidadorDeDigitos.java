@@ -1,12 +1,17 @@
 package com.luis.validador.core;
 
-import com.luis.validador.model.CPF;
-import com.luis.validador.utils.ExtratorDeNumero;
+import com.luis.validador.model.*;
+import static com.luis.validador.model.DigitoVerificador.*;
+import com.luis.validador.utils.*;
 
 public class ValidadorDeDigitos {
-    private final CPF cpf;
+    private CPF cpf;
     
     public ValidadorDeDigitos(CPF cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setCpf(CPF cpf) {
         this.cpf = cpf;
     }
     
@@ -15,25 +20,21 @@ public class ValidadorDeDigitos {
     }
     
     public boolean validarPrimeiroDigito() {
-        int somaDaMultiplicacaoDosNumeros = obterSomaDaMultiplicacaoDosNumerosDoCpf(10, 2);
-        return digitoEhValido(somaDaMultiplicacaoDosNumeros, cpf.getPrimeiroDigitoVerificador());
+        int somaDaMultiplicacaoDosNumeros = obterSomaDaMultiplicacaoDosNumerosDoCpf(PRIMEIRO);
+        return ehValido(somaDaMultiplicacaoDosNumeros, cpf.getPrimeiroDigitoVerificador());
     }
 
     public boolean validarSegundoDigito() {
-        int somaDaMultiplicacaoDosNumeros = obterSomaDaMultiplicacaoDosNumerosDoCpf(11, 2);
-        return digitoEhValido(somaDaMultiplicacaoDosNumeros, cpf.getSegundoDigitoVerificador());
+        int somaDaMultiplicacaoDosNumeros = obterSomaDaMultiplicacaoDosNumerosDoCpf(SEGUNDO);
+        return ehValido(somaDaMultiplicacaoDosNumeros, cpf.getSegundoDigitoVerificador());
     }
 
-    public boolean digitoEhValido(int multiplicacao, int digitoVerificador) {
-        return (multiplicacao * 10) % 11 == digitoVerificador;
-    }
-
-    public int obterSomaDaMultiplicacaoDosNumerosDoCpf(int maximo, int minimo) {
+    public int obterSomaDaMultiplicacaoDosNumerosDoCpf(DigitoVerificador digito) {
         ExtratorDeNumero extrator = new ExtratorDeNumero(cpf.get());
     	String[] numerosDoCPF = extrator.extrairApenasNumerosDaString();
         int soma = 0, indice = 0;
 
-        for (int i = maximo; i >= minimo; i--) {
+        for (int i = digito.getQuantidadeDeMultiplicacoes(); i >= digito.getNumeroMinimo(); i--) {
             soma += Integer.parseInt(numerosDoCPF[indice]) * i;
             indice++;
         }

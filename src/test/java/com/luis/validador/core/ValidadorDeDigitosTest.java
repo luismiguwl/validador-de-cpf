@@ -1,33 +1,22 @@
 package com.luis.validador.core;
 
 import static org.assertj.core.api.Assertions.*;
+import static com.luis.validador.model.DigitoVerificador.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.luis.validador.model.*;
+import static com.luis.validador.CPFParaTeste.*;
 
-public class ValidadorDeDigitosTest {
+class ValidadorDeDigitosTest {
 	ValidadorDeDigitos validador;
 	CPF cpf;
-	String numerosDoCPF = getCpfValido();
-	
+
 	@BeforeEach
 	void setUp() {
-		cpf = new CPF(numerosDoCPF);
+		cpf = new CPF(CPF_VALIDO);
 		validador = new ValidadorDeDigitos(cpf);
-	}
-	
-	private String getCpfValido() {
-		return "479.885.790-45";
-	}
-	
-	private String getCpfComApenasPrimeiroDigitoValido() {
-		return "479.885.790-46";
-	}
-	
-	private String getCpfComApenasSegundoDigitoValido() {
-		return "479.885.790-35";
 	}
 	
 	@Test
@@ -36,74 +25,55 @@ public class ValidadorDeDigitosTest {
 	}
 	
 	@Test
-	void deveRetornarFalseSePrimeiroDigitoForInvalido() {
-		numerosDoCPF = getCpfComApenasSegundoDigitoValido();
-		setUp();
-		assertThat(validador.validarPrimeiroDigito()).isFalse();
-	}
-	
-	@Test
 	void deveRetornarTrueSeSegundoDigitoForValido() {
 		assertThat(validador.validarSegundoDigito()).isTrue();
 	}
-	
-	@Test
-	void deveRetornarFalseSeSegundoDigitoForInvalido() {
-		numerosDoCPF = getCpfComApenasPrimeiroDigitoValido();
-		setUp();
-		assertThat(validador.validarSegundoDigito()).isFalse();
-	}
-	
-	@Test
-	void deveRetornarTrueSeDigitoForValido() {
-		assertThat(validador.digitoEhValido(359, cpf.getPrimeiroDigitoVerificador())).isTrue();
-	}
-	
-	@Test
-	void deveRetornarTrueSeDigitoForValido2() {
-		assertThat(validador.digitoEhValido(424, cpf.getSegundoDigitoVerificador())).isTrue();
-	}
-	
-	@Test
-	void deveRetornarFalseSeDigitoForInvalido() {
-		numerosDoCPF = getCpfComApenasSegundoDigitoValido();
-		setUp();
-		assertThat(validador.digitoEhValido(359, cpf.getPrimeiroDigitoVerificador())).isFalse();
-	}
-	
-	@Test
-	void deveRetornarFalseSeDigitoForInvalido2() {
-		numerosDoCPF = getCpfComApenasPrimeiroDigitoValido();
-		setUp();
-		assertThat(validador.digitoEhValido(424, cpf.getSegundoDigitoVerificador())).isFalse();
-	}
-	
-	@Test
-	void deveRetornar359AoVerificarPrimeiroDigito() {
-		assertThat(validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(10, 2)).isEqualTo(359);
-	}
-	
-	@Test
-	void deveRetornar424AoVerificarSegundoDigito() {
-		assertThat(validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(11, 2)).isEqualTo(424);
-	}
-	
+
 	@Test
 	void deveRetornarTrueSeDigitosEstiveremCorretos() {
 		assertThat(validador.digitosVerificadoresSaoValidos()).isTrue();
 	}
+
+	@Test
+	void deveRetornarFalseSeAlgumDosDigitosVerificadoresEstiveremCorretos() {
+		validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO));
+		assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
+
+		validador.setCpf(new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO));
+		assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
+	}
+
+	@Test
+	void deveRetornarFalseSePrimeiroDigitoForInvalido() {
+		validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO));
+		assertThat(validador.validarPrimeiroDigito()).isFalse();
+	}
 	
 	@Test
-	void deveRetornarFalseSeApenasPrimeiroDigitoForValido() {
-		numerosDoCPF = getCpfComApenasPrimeiroDigitoValido();
-		setUp();
+	void deveRetornarFalseSeSegundoDigitoForInvalido() {
+		validador.setCpf(new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO));
+		assertThat(validador.validarSegundoDigito()).isFalse();
+	}
+	
+	@Test
+	void deveRetornar359AoSomarAMultiplicacaoDosNumerosParaConferirPrimeiroDigito() {
+		assertThat(validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(PRIMEIRO)).isEqualTo(359);
+	}
+	
+	@Test
+	void deveRetornar424AoSomarAMultiplicacaoDosNumerosParaConferirSegundoDigito() {
+		assertThat(validador.obterSomaDaMultiplicacaoDosNumerosDoCpf(SEGUNDO)).isEqualTo(424);
+	}
+	
+	@Test
+	void deveRetornarFalseAoTentarValidarDigitosVerificadoresQuandoSegundoDigitoForInvalido() {
+		validador.setCpf(new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO));
 		assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
 	}
 	
 	@Test
-	void deveRetornarFalseSeApenasSegundoDigitoForValido() {
-		numerosDoCPF = getCpfComApenasSegundoDigitoValido();
-		setUp();
+	void deveRetornarFalseAoTentarValidarDigitosVerificadoresQuandoPrimeiroDigitoForInvalido() {
+		validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO));
 		assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
 	}
 }
