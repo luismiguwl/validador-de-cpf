@@ -7,22 +7,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ValidadorTest {
-	Validador validador;
-	String numerosDoCPF;
 
-	@BeforeEach
-	void setUp() {
-		validador = new Validador(CPF_VALIDO);
-	}
-	
-	@Test
-	void deveRetornarTrueSeEstruturaForValida() {
-		assertThat(validador.validar()).isTrue();
-	}
-	
-	@Test
-	void deveRetornarFalseSeEstruturaForInvalida() {
-		validador.setSupostoCpf(CPF_INVALIDO);
-		assertThat(validador.validar()).isFalse();
-	}
+    Validador validador;
+    String numerosDoCPF;
+
+    @BeforeEach
+    void setUp() {
+        validador = new Validador(CPF_VALIDO);
+    }
+
+    @Test
+    void deveRetornarTrueSeEstruturaForValida() {
+        assertThat(validador.validar()).isTrue();
+    }
+
+    @Test
+    void deveRetornarFalseSeEstruturaForInvalida() {
+        validador.setSupostoCpf(CPF_INVALIDO);
+        assertThat(validador.validar()).isFalse();
+    }
 }

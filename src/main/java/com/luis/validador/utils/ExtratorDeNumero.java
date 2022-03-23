@@ -4,16 +4,20 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class ExtratorDeNumero {
-	private String texto;
-	
-	public ExtratorDeNumero(String texto) {
-		this.texto = texto;
-	}
 
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-	
+    private String texto;
+
+    public ExtratorDeNumero(String texto) {
+        this.texto = texto;
+    }
+
+    public ExtratorDeNumero() {
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+    
     public String[] extrairApenasNumerosDaString() {
         String[] caracteresDoCPF = texto.split("");
 

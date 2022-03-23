@@ -1,17 +1,20 @@
 package com.luis.validador.core;
 
-import java.util.Arrays;
-
-import com.luis.validador.utils.*;
+import java.util.List;
 
 public class ValidadorDeEstrutura {
-    private final int QUANTIDADE_DE_NUMEROS_DE_UM_CPF = 11;
     private String cpf;
+    private final List<String> FORMATOS_ACEITOS = List.of(
+                "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}",
+                "[0-9]{11}");
 
     public ValidadorDeEstrutura(String cpf) {
         this.cpf = cpf;
     }
 
+    public ValidadorDeEstrutura() {
+    }
+    
     public String getCpf() {
         return cpf;
     }
@@ -21,52 +24,19 @@ public class ValidadorDeEstrutura {
     }
 
     public boolean ehValida() {
-        return !ehNulo() && possuiOnzeNumeros() && caracteresSaoValidos();
-    }
-
-    public boolean ehNulo() {
-        return cpf == null;
-    }
-
-    public boolean possuiOnzeNumeros() {
-    	ExtratorDeNumero extrator = new ExtratorDeNumero(cpf);
-        String[] apenasNumeros = extrator.extrairApenasNumerosDaString();
-        return apenasNumeros.length == QUANTIDADE_DE_NUMEROS_DE_UM_CPF;
-    }
-
-    public boolean caracteresSaoValidos() {
-        String caracteresAceitos = "0123456789-.";
-        boolean possuiTodosCaracteresValidos
-                = Arrays.stream(cpf.split(""))
-                        .allMatch(caracter -> caracteresAceitos.contains(caracter));
-
-        return possuiTodosCaracteresValidos;
+        boolean formatoOk = FORMATOS_ACEITOS.stream().anyMatch(padrao -> cpf.matches(padrao));
+        return formatoOk && !todosCaracteresSaoIguais(cpf);
     }
     
-    public boolean numerosSaoIguais() {
-        int primeiroNumeroDoCPF = obterPrimeiroNumeroDoCPF();
-        String[] numerosRepetidos = preencherArrayComPrimeiroNumeroDoCPF(primeiroNumeroDoCPF);
-        String numerosUnidos = String.join("", numerosRepetidos);
-        return numerosDoCPFSaoIguais(numerosUnidos);
-    }
+    public boolean todosCaracteresSaoIguais(String texto) {
+        if (texto == null || texto.trim().isBlank()) {
+            return false;
+        }
         
-    public int obterPrimeiroNumeroDoCPF() {
-        String primeiroCaracter = Character.toString(cpf.charAt(0));
-        return Integer.parseInt(primeiroCaracter);
+        texto = texto.trim();
+        
+        String primeiroCaracter = Character.toString(texto.charAt(0));
+        String regex = String.format("[%s]{%d}", primeiroCaracter, texto.length());
+        return texto.matches(regex);
     }
-
-    public String[] preencherArrayComPrimeiroNumeroDoCPF(int primeiroNumeroDoCPF) {
-        if (primeiroNumeroDoCPF < 0) {
-			throw new IllegalArgumentException("Número precisa ser positivo");
-		}
-    	
-    	String[] numeros = new String[QUANTIDADE_DE_NUMEROS_DE_UM_CPF];
-        Arrays.fill(numeros, Integer.toString(primeiroNumeroDoCPF));
-        return numeros;
-    }
-    
-    public boolean numerosDoCPFSaoIguais(String comparador) {
-        return cpf.equals(comparador);
-    }
-
 }
