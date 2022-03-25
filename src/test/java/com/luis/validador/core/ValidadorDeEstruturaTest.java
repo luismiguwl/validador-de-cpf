@@ -2,14 +2,14 @@ package com.luis.validador.core;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static com.luis.validador.CPFParaTeste.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ValidadorDeEstruturaTest {
 
     ValidadorDeEstrutura estrutura;
-    String cpf = "123.106.770-51";
+    String cpf = CPF_VALIDO;
     
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         estrutura = new ValidadorDeEstrutura(cpf);
     }
@@ -20,10 +20,19 @@ class ValidadorDeEstruturaTest {
     }
     
     @Test
-    void deveRetornarFalseSeEstruturaDoCpfSemPontuacaoForValida() {
-        String cpfSemPontuacao = estrutura.getCpf().replaceAll("[.-]", "");
+    void deveRetornarTrueSeEstruturaDoCpfSemPontuacaoForValida() {
+        String cpfSemPontuacao = cpf.replaceAll("[.-]", "");
         estrutura.setCpf(cpfSemPontuacao);
         assertTrue(estrutura.ehValida());
+    }
+    
+    @Test
+    void deveRetornarFalseSeCPFConterMaisQueOnzeNumeros() {
+        estrutura.setCpf(cpf.concat("1"));
+        assertFalse(estrutura.ehValida());
+        
+        estrutura.setCpf(cpf.concat("1").replaceAll("[.-]", ""));
+        assertFalse(estrutura.ehValida());
     }
     
     @Test
@@ -37,6 +46,8 @@ class ValidadorDeEstruturaTest {
         assertTrue(estrutura.todosCaracteresSaoIguais("111"));
         assertTrue(estrutura.todosCaracteresSaoIguais(" 111 "));
         assertTrue(estrutura.todosCaracteresSaoIguais("1"));
+        assertTrue(estrutura.todosCaracteresSaoIguais("aaaa"));
+        assertTrue(estrutura.todosCaracteresSaoIguais("...."));
     }
     
     @Test
