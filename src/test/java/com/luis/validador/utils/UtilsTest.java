@@ -9,20 +9,36 @@ class UtilsTest {
     ExtratorDeNumero extrator = new ExtratorDeNumero();
 
     @Test
-    void extrairApenasNumerosDeUmaStringTest() {
+    void deveExtrairApenasUmNumeroDaString() {
         extrator.setTexto("Way 2 Sexy");
-        String[] resultadoEsperado = {"2"};
-
-        assertThat(extrator.extrairApenasNumerosDaString()).isEqualTo(resultadoEsperado);
+        assertThat(extrator.extrairApenasNumerosDaString()).hasSize(1);
+        assertThat(extrator.extrairApenasNumerosDaString()).contains("2");
+    }
+    
+    @Test
+    void deveExtrairApenasUmNumeroDaStringSeStringNaoPossuirEspaco() {
+        extrator.setTexto("Way2Sexy");
+        assertThat(extrator.extrairApenasNumerosDaString()).hasSize(1);
+        assertThat(extrator.extrairApenasNumerosDaString()).contains("2");
+    }
+    
+    @Test
+    void deveExtrairDoisNumerosDaStringSeStringNaoPossuirEspaco() {
+        extrator.setTexto("Way22Sexy");
+        assertThat(extrator.extrairApenasNumerosDaString()).hasSize(2);
+        assertThat(extrator.extrairApenasNumerosDaString()).contains("2", "2");
     }
 
     @Test
-    void extrairApenasNumerosDeUmaStringSemNumerosTest() {
+    void deveRetornarArrayVazioSeStringNaoPossuirNumeros() {
         extrator.setTexto("On That Time");
-
-        String[] valorEsperado = {};
-        String[] valorRetornado = extrator.extrairApenasNumerosDaString();
-
-        assertThat(valorRetornado).isEqualTo(valorEsperado);
+        assertThat(extrator.extrairApenasNumerosDaString()).isEmpty();
     }
+    
+    @Test
+    void deveRetornarArrayVazioSeStringForVazia() {
+        extrator.setTexto("");
+        assertThat(extrator.extrairApenasNumerosDaString()).hasSize(0);
+    }
+    
 }
