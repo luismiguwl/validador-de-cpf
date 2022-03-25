@@ -13,7 +13,7 @@ class ValidadorTest {
 
     @BeforeEach
     void setUp() {
-        validador = new Validador(CPF_VALIDO);
+        validador = new Validador(CPF_VALIDO.get());
     }
 
     @Test
@@ -23,7 +23,7 @@ class ValidadorTest {
 
     @Test
     void deveRetornarFalseSeEstruturaForInvalida() {
-        validador.setSupostoCpf(CPF_INVALIDO);
+        validador.setSupostoCpf(CPF_INVALIDO.get());
         assertThat(validador.validar()).isFalse();
     }
 }

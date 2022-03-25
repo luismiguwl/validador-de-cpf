@@ -7,7 +7,7 @@ import static com.luis.validador.CPFParaTeste.*;
 class ValidadorDeEstruturaTest {
 
     ValidadorDeEstrutura estrutura;
-    String cpf = CPF_VALIDO;
+    String cpf = CPF_VALIDO.get();
     
     @BeforeEach
     void setUp() {

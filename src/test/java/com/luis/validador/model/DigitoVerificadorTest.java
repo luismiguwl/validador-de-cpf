@@ -8,7 +8,7 @@ import static com.luis.validador.CPFParaTeste.*;
 
 class DigitoVerificadorTest {
 
-    CPF cpf = new CPF(CPF_VALIDO);
+    CPF cpf = new CPF(CPF_VALIDO.get());
 
     @Test
     void deveRetornarTrueQuandoPrimeiroDigitoForValido() {
@@ -17,7 +17,7 @@ class DigitoVerificadorTest {
 
     @Test
     void deveRetornarFalseQuandoPrimeiroDigitoForInvalido() {
-        cpf = new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO);
+        cpf = new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get());
         assertFalse(ehValido(359, cpf.getPrimeiroDigitoVerificador()));
     }
     
@@ -28,7 +28,7 @@ class DigitoVerificadorTest {
     
     @Test
     void deveRetornarFalseQuandoSegundoDigitoForInvalido() {
-        cpf = new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO);
+        cpf = new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO.get());
         assertFalse(ehValido(359, cpf.getSegundoDigitoVerificador()));
     }
 }

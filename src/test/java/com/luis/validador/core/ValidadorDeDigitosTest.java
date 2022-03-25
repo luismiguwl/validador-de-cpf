@@ -15,7 +15,7 @@ class ValidadorDeDigitosTest {
 
     @BeforeEach
     void setUp() {
-        cpf = new CPF(CPF_VALIDO);
+        cpf = new CPF(CPF_VALIDO.get());
         validador = new ValidadorDeDigitos(cpf);
     }
 
@@ -36,22 +36,22 @@ class ValidadorDeDigitosTest {
 
     @Test
     void deveRetornarFalseSeAlgumDosDigitosVerificadoresEstiveremCorretos() {
-        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO));
+        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get()));
         assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
 
-        validador.setCpf(new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO));
+        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get()));
         assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
     }
 
     @Test
     void deveRetornarFalseSePrimeiroDigitoForInvalido() {
-        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO));
+        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get()));
         assertThat(validador.validarPrimeiroDigito()).isFalse();
     }
 
     @Test
     void deveRetornarFalseSeSegundoDigitoForInvalido() {
-        validador.setCpf(new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO));
+        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get()));
         assertThat(validador.validarSegundoDigito()).isFalse();
     }
 
@@ -67,13 +67,13 @@ class ValidadorDeDigitosTest {
 
     @Test
     void deveRetornarFalseAoTentarValidarDigitosVerificadoresQuandoSegundoDigitoForInvalido() {
-        validador.setCpf(new CPF(CPF_COM_APENAS_PRIMEIRO_DIGITO_VALIDO));
+        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get()));
         assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
     }
 
     @Test
     void deveRetornarFalseAoTentarValidarDigitosVerificadoresQuandoPrimeiroDigitoForInvalido() {
-        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO));
+        validador.setCpf(new CPF(CPF_COM_APENAS_SEGUNDO_DIGITO_VALIDO.get()));
         assertThat(validador.digitosVerificadoresSaoValidos()).isFalse();
     }
 }
