@@ -66,4 +66,11 @@ class ValidadorDeEstruturaTest {
     void deveRetornarFalseSeTextoForNulo() {
         assertFalse(estrutura.todosCaracteresSaoIguais(null));
     }
+    
+    @Test
+    void deveRetornarFalseSeTextoPossuirLetra() {
+        estrutura.setCpf("123.aaa.232-00");
+        assertFalse(estrutura.ehValida());
+    }
+    
 }

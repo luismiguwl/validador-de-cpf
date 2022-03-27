@@ -1,12 +1,7 @@
 package com.luis.validador.core;
 
-import java.util.List;
-
 public class ValidadorDeEstrutura {
     private String cpf;
-    private final List<String> FORMATOS_ACEITOS = List.of(
-                "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}",
-                "[0-9]{11}");
 
     public ValidadorDeEstrutura(String cpf) {
         this.cpf = cpf;
@@ -24,8 +19,9 @@ public class ValidadorDeEstrutura {
     }
 
     public boolean ehValida() {
-        boolean formatoOk = FORMATOS_ACEITOS.stream().anyMatch(padrao -> cpf.matches(padrao));
-        return formatoOk && !todosCaracteresSaoIguais(cpf);
+        String apenasNumerosDoCPF = cpf.replaceAll("[^0-9]", "");
+        boolean possuiOnzeNumeros = apenasNumerosDoCPF.length() == 11;
+        return possuiOnzeNumeros && !todosCaracteresSaoIguais(cpf);
     }
     
     public boolean todosCaracteresSaoIguais(String texto) {
@@ -36,7 +32,6 @@ public class ValidadorDeEstrutura {
         texto = texto.trim();
         
         String primeiroCaracter = Character.toString(texto.charAt(0));
-        String regex = String.format("[%s]{%d}", primeiroCaracter, texto.length());
-        return texto.matches(regex);
+        return texto.equals(primeiroCaracter.repeat(texto.length()));
     }
 }
